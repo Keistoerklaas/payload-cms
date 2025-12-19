@@ -4,7 +4,7 @@ const BeforeLogin: React.FC = () => {
   return (
     <div>
       <p>
-        <b>Welcome to your dashboard!</b>
+        <b>Welkom!</b>
       </p>
     </div>
   )

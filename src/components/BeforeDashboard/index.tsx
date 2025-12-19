@@ -9,7 +9,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className={baseClass}>
       <Banner className={`${baseClass}__banner`} type="success">
-        <h4>Welcome to your dashboard!</h4>
+        <h4>Welkom!</h4>
       </Banner>
     </div>
   )
