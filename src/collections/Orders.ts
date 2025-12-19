@@ -64,11 +64,30 @@ export const Orders: CollectionConfig<'orders'> = {
       required: true,
     },
     {
-      name: 'products',
+      name: 'items',
       label: 'Producten',
-      type: 'relationship',
-      relationTo: 'products',
-      hasMany: true,
+      type: 'array',
+      admin: {
+        components: {
+          RowLabel: '@/components/OrdersItemRowLabel',
+        },
+      },
+      fields: [
+        {
+          name: 'product',
+          label: 'Product',
+          type: 'relationship',
+          relationTo: 'products',
+          required: true,
+        },
+        {
+          name: 'quantity',
+          label: 'Aantal',
+          type: 'number',
+          required: true,
+          min: 1,
+        },
+      ],
     },
     {
       name: 'type',

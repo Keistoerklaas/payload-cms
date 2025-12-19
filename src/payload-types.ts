@@ -123,7 +123,13 @@ export interface Order {
   id: number;
   orderNumber: string;
   customerId: number | User;
-  products?: (number | Product)[] | null;
+  items?:
+    | {
+        product: number | Product;
+        quantity: number;
+        id?: string | null;
+      }[]
+    | null;
   type: 'pickup' | 'delivery';
   status: 'pending' | 'processing' | 'completed' | 'cancelled';
   date: string;
@@ -235,7 +241,13 @@ export interface PayloadMigration {
 export interface OrdersSelect<T extends boolean = true> {
   orderNumber?: T;
   customerId?: T;
-  products?: T;
+  items?:
+    | T
+    | {
+        product?: T;
+        quantity?: T;
+        id?: T;
+      };
   type?: T;
   status?: T;
   date?: T;
