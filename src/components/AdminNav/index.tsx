@@ -1,9 +1,10 @@
 'use client'
 
 import React from 'react'
-import { Link, NavToggler, useAuth, useConfig, useNav, useTranslation } from '@payloadcms/ui'
+import { Link, useAuth, useConfig, useNav, useTranslation } from '@payloadcms/ui'
 import { formatAdminURL } from '@payloadcms/ui/shared'
 import { getTranslation } from '@payloadcms/translations'
+import Image from 'next/image'
 
 import './index.scss'
 
@@ -67,8 +68,13 @@ const AdminNav: React.FC = () => {
       ref={navRef}
     >
       <div className={`${baseClass}__header`}>
-        <img alt="Verhoeven" className={`${baseClass}__logo`} src="/logo.svg" />
-        <NavToggler className={`${baseClass}__toggler`} />
+        <Image
+          alt="Verhoeven"
+          className={`${baseClass}__logo`}
+          src="/logo.svg"
+          width={180}
+          height={180}
+        ></Image>
       </div>
       <ul className={`${baseClass}__list`}>
         <li className={`${baseClass}__item`}>

@@ -10,6 +10,7 @@ import { fileURLToPath } from 'url'
 
 import { Users } from './collections/Users'
 import { Orders } from './collections/Orders'
+import { Products } from './collections/Products'
 // import { Footer } from './Footer/config'
 // import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -79,7 +80,7 @@ export default buildConfig({
     },
   }),
   // collections: [Pages, Posts, Media, Categories, Users],
-  collections: [Orders, Users],
+  collections: [Orders, Users, Products],
   cors: [getServerSideURL()].filter(Boolean),
   // globals: [Header, Footer],
   globals: [],
