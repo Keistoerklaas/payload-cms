@@ -1,6 +1,11 @@
 @import '~@payloadcms/ui/scss';
 
-.dashboard .before-dashboard {
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0 var(--gutter-h);
+  position: relative;
   margin-bottom: base(1.5);
 
   &__banner {
