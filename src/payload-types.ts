@@ -127,11 +127,50 @@ export interface Order {
     | {
         product: number | Product;
         quantity: number;
+        unitPrice: number;
         id?: string | null;
       }[]
     | null;
   type: 'pickup' | 'delivery';
+  delivery?: {
+    address: string;
+    postalCode: string;
+    city: string;
+    deliveryTime?: string | null;
+  };
   status: 'pending' | 'processing' | 'completed' | 'cancelled';
+  pricing?: {
+    subtotal?: number | null;
+    tax?: number | null;
+    total?: number | null;
+  };
+  flags?: {
+    paid?: boolean | null;
+    invoiceSent?: boolean | null;
+    urgent?: boolean | null;
+  };
+  timeline?:
+    | {
+        event?: string | null;
+        at?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  internalNotes?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   date: string;
   comment?: string | null;
   updatedAt: string;
@@ -170,6 +209,7 @@ export interface Product {
   id: number;
   name: string;
   amount: number;
+  unitPrice: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -246,10 +286,41 @@ export interface OrdersSelect<T extends boolean = true> {
     | {
         product?: T;
         quantity?: T;
+        unitPrice?: T;
         id?: T;
       };
   type?: T;
+  delivery?:
+    | T
+    | {
+        address?: T;
+        postalCode?: T;
+        city?: T;
+        deliveryTime?: T;
+      };
   status?: T;
+  pricing?:
+    | T
+    | {
+        subtotal?: T;
+        tax?: T;
+        total?: T;
+      };
+  flags?:
+    | T
+    | {
+        paid?: T;
+        invoiceSent?: T;
+        urgent?: T;
+      };
+  timeline?:
+    | T
+    | {
+        event?: T;
+        at?: T;
+        id?: T;
+      };
+  internalNotes?: T;
   date?: T;
   comment?: T;
   updatedAt?: T;
@@ -285,6 +356,7 @@ export interface UsersSelect<T extends boolean = true> {
 export interface ProductsSelect<T extends boolean = true> {
   name?: T;
   amount?: T;
+  unitPrice?: T;
   updatedAt?: T;
   createdAt?: T;
 }
