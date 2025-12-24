@@ -196,6 +196,17 @@ export const Preview: CollectionConfig<'preview'> = {
             },
           ],
         },
+        {
+          label: 'Form Builder',
+          fields: [
+            {
+              name: 'form',
+              type: 'relationship',
+              relationTo: 'forms',
+              label: 'Form',
+            },
+          ],
+        },
       ],
     },
   ],

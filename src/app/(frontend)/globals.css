@@ -95,6 +95,7 @@
 
 html {
   opacity: 0;
+  font-family: 'Inter', sans-serif;
 }
 
 html[data-theme='dark'],
