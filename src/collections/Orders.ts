@@ -109,6 +109,18 @@ export const Orders: CollectionConfig<'orders'> = {
 
   fields: [
     {
+      name: 'orderSectionTitle',
+      type: 'ui',
+      admin: {
+        components: {
+          Field: '@/components/OrdersSectionTitle',
+        },
+        custom: {
+          heading: 'Bestelling',
+        },
+      },
+    },
+    {
       name: 'orderNumber',
       type: 'text',
       label: 'Bestellingsnummer',
@@ -123,6 +135,16 @@ export const Orders: CollectionConfig<'orders'> = {
       label: 'Klant',
       relationTo: 'users',
       required: true,
+    },
+
+    {
+      name: 'date',
+      type: 'date',
+      label: 'Datum',
+      required: true,
+      admin: {
+        date: { displayFormat: 'dd-MM-yyyy' },
+      },
     },
 
     {
@@ -217,7 +239,7 @@ export const Orders: CollectionConfig<'orders'> = {
     {
       name: 'flags',
       type: 'group',
-      label: 'Interne flags',
+      label: 'Interne status',
       fields: [
         { name: 'paid', type: 'checkbox', label: 'Betaald' },
         { name: 'invoiceSent', type: 'checkbox', label: 'Factuur verzonden' },
@@ -226,36 +248,19 @@ export const Orders: CollectionConfig<'orders'> = {
     },
 
     {
-      name: 'timeline',
-      type: 'array',
-      label: 'Tijdlijn',
-      admin: { readOnly: true },
-      fields: [
-        { name: 'event', type: 'text' },
-        { name: 'at', type: 'date' },
-      ],
-    },
-
-    {
-      name: 'internalNotes',
-      type: 'richText',
-      label: 'Interne notities',
-    },
-
-    {
-      name: 'date',
-      type: 'date',
-      label: 'Datum',
-      required: true,
-      admin: {
-        date: { displayFormat: 'dd-MM-yyyy' },
-      },
-    },
-
-    {
       name: 'comment',
-      type: 'textarea',
+      type: 'group',
       label: 'Opmerking',
+      fields: [
+        {
+          name: 'comment',
+          label: '',
+          type: 'textarea',
+          admin: {
+            rows: 5,
+          },
+        },
+      ],
     },
   ],
 

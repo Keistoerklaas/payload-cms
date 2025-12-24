@@ -123,6 +123,7 @@ export interface Order {
   id: number;
   orderNumber: string;
   customerId: number | User;
+  date: string;
   items?:
     | {
         product: number | Product;
@@ -149,30 +150,9 @@ export interface Order {
     invoiceSent?: boolean | null;
     urgent?: boolean | null;
   };
-  timeline?:
-    | {
-        event?: string | null;
-        at?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  internalNotes?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  date: string;
-  comment?: string | null;
+  comment?: {
+    comment?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -281,6 +261,7 @@ export interface PayloadMigration {
 export interface OrdersSelect<T extends boolean = true> {
   orderNumber?: T;
   customerId?: T;
+  date?: T;
   items?:
     | T
     | {
@@ -313,16 +294,11 @@ export interface OrdersSelect<T extends boolean = true> {
         invoiceSent?: T;
         urgent?: T;
       };
-  timeline?:
+  comment?:
     | T
     | {
-        event?: T;
-        at?: T;
-        id?: T;
+        comment?: T;
       };
-  internalNotes?: T;
-  date?: T;
-  comment?: T;
   updatedAt?: T;
   createdAt?: T;
 }
