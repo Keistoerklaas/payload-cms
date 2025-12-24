@@ -1,8 +1,4 @@
-import type {
-  CollectionBeforeChangeHook,
-  CollectionAfterChangeHook,
-  CollectionConfig,
-} from 'payload'
+import type { CollectionBeforeChangeHook, CollectionConfig } from 'payload'
 
 /* -------------------------------- helpers -------------------------------- */
 
@@ -68,25 +64,6 @@ const calculateTotals: CollectionBeforeChangeHook = async ({ data }) => {
     ...data,
     pricing: calculatePricing(data.items),
   }
-}
-
-const addTimelineEntry: CollectionAfterChangeHook = async ({ doc, previousDoc, req }) => {
-  if (doc.status === previousDoc?.status) return
-
-  await req.payload.update({
-    collection: 'orders',
-    id: doc.id,
-    data: {
-      timeline: [
-        ...(doc.timeline || []),
-        {
-          event: `Status gewijzigd naar "${doc.status}"`,
-          at: new Date().toISOString(),
-        },
-      ],
-    },
-    overrideAccess: true,
-  })
 }
 
 /* ------------------------------- collection -------------------------------- */
@@ -266,6 +243,5 @@ export const Orders: CollectionConfig<'orders'> = {
 
   hooks: {
     beforeChange: [setOrderNumber, calculateTotals],
-    afterChange: [addTimelineEntry],
   },
 }

@@ -70,6 +70,7 @@ export interface Config {
     orders: Order;
     users: User;
     products: Product;
+    preview: Preview;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -79,6 +80,7 @@ export interface Config {
     orders: OrdersSelect<false> | OrdersSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    preview: PreviewSelect<false> | PreviewSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -195,6 +197,70 @@ export interface Product {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "preview".
+ */
+export interface Preview {
+  id: number;
+  title: string;
+  status?: ('draft' | 'published') | null;
+  text?: string | null;
+  email?: string | null;
+  textarea?: string | null;
+  number?: number | null;
+  checkbox?: boolean | null;
+  date?: string | null;
+  select?: ('one' | 'two' | 'three') | null;
+  radio?: ('a' | 'b' | 'c') | null;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  group?: {
+    firstName?: string | null;
+    lastName?: string | null;
+    note?: string | null;
+  };
+  array?:
+    | {
+        label: string;
+        value?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  blocks?:
+    | (
+        | {
+            title: string;
+            body?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'noteBlock';
+          }
+        | {
+            alt?: string | null;
+            url?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageBlock';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -211,6 +277,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'products';
         value: number | Product;
+      } | null)
+    | ({
+        relationTo: 'preview';
+        value: number | Preview;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -333,6 +403,59 @@ export interface ProductsSelect<T extends boolean = true> {
   name?: T;
   amount?: T;
   unitPrice?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "preview_select".
+ */
+export interface PreviewSelect<T extends boolean = true> {
+  title?: T;
+  status?: T;
+  text?: T;
+  email?: T;
+  textarea?: T;
+  number?: T;
+  checkbox?: T;
+  date?: T;
+  select?: T;
+  radio?: T;
+  richText?: T;
+  group?:
+    | T
+    | {
+        firstName?: T;
+        lastName?: T;
+        note?: T;
+      };
+  array?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  blocks?:
+    | T
+    | {
+        noteBlock?:
+          | T
+          | {
+              title?: T;
+              body?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageBlock?:
+          | T
+          | {
+              alt?: T;
+              url?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
 }
